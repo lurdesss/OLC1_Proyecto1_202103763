@@ -1,0 +1,36 @@
+package analizadores;
+
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
+import errores.ErrorSintactico;
+import instrucciones.*;
+
+
+parser code {:
+    
+    public LinkedList<Instruccion> AST;
+    public LinkedList<ErrorSintactico> errores = new LinkedList<>();
+    public void error_sintactico(Symbol s) {
+        if (s.value != null)
+            errores.add(new ErrorSintactico(s.value.toString(), s.left, s.right));
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+                throw new Exception("Error irrecuperable en (linea, columna): " + s.left + ", " + s.right);
+    }
+:}
+
+terminal String PROGRAM, ENDPROGRAM;
+terminal String VAR, END, ARREGLO, TYPEDEF, ID, CONSOLE, PRINT;
+terminal String DOSPUNTOS, DOSPUNTOSSEGUIDOS, ASIGNACION, ARROBA, COMA, IGUAL;
+
+non terminal ini;
+non terminal LinkedList<Instruccion> statements;
+non terminal Instruccion statement;
+non terminal Instruccion expresion;
+
+start with ini;
+
+ini ::= PROGRAM statements ENDPROGRAM;
+

@@ -26,7 +26,7 @@ public class Root extends JFrame implements ActionListener {
     private JLabel estadoArchivoLabel; // JLabel para mostrar el estado del archivo
 
     public Root() {
-        setSize(1000, 510);
+        setSize(1000, 540);
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Data Forge");
@@ -65,12 +65,6 @@ public class Root extends JFrame implements ActionListener {
         limpiarc.addActionListener(e -> LimpiarConsola());
 
         menuBar.add(archivo);
-        
-        JMenu executeAction = new JMenu("Ejecutar");
-        ejecutaLSI = new JMenuItem("Ejecutar Análisis");
-        ejecutaLSI.addActionListener(this);
-        executeAction.add(ejecutaLSI);
-        menuBar.add(executeAction);
 
         JMenu reportes = new JMenu("Reportes");
         rTokens = new JMenuItem("Reporte de Tokens");

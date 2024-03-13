@@ -1,0 +1,54 @@
+package analizadores;
+
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
+import errores.ErrorSintactico;
+import instrucciones.*;
+
+
+parser code {:
+
+    public LinkedList<Instruccion> AST;
+    public LinkedList<ErrorSintactico> errores = new LinkedList<>();
+    public void error_sintactico(Symbol s) {
+        if (s.value != null)
+            errores.add(new ErrorSintactico(s.value.toString(), s.left, s.right));
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+                throw new Exception("Error irrecuperable en (linea, columna): " + s.left + ", " + s.right);
+    }
+:}
+
+// terminales
+terminal String PROGRAM, ENDPROGRAM;
+terminal String VAR, ARREGLO;
+terminal String CONSOLE, PRINT, COLUMN;
+terminal String DOUBLE, CHAR, TYPEDEF, ID;
+terminal String DOSPUNTOS, DOSPUNTOSSEGUIDOS, ASIGNACION, ARROBA, ASIGNACIONINV, IGUAL, CORAPERTURA, CORCIERRE, PARAPERTURA, PARCIERRE, END;
+terminal String SUM, RES, MUL, DIV, MOD, MEDIA, MEDIANA, MODA, VARIANZA, MAX, MIN;
+terminal String GRAPHPIE, GRAPHBAR, GRAPHLINE, HISTOGRAM;
+terminal String LABEL, TITULO, VALUES, EXEC, EJEX, EJEY, TITULOX, TITULOY;
+
+// no terminales
+non terminal ini;
+
+// 
+
+non terminal LinkedList<Instruccion> statements;
+non terminal Instruccion statement;
+non terminal Instruccion expresion;
+
+start with ini;
+
+ini ::= PROGRAM statements ENDPROGRAM;
+
+statements ::= statements:s statement:t {: RESULT=s; RESULT.add(t); :}
+| statement:s {:RESULT = new LinkedList<Instruccion>(); RESULT.add(s);:}
+;
+
+statement ::= VAR DOSPUNTOS TYPEDEF DOSPUNTOSSEGUIDOS ID:i ASIGNACION expresion:e END {:RESULT = new Asignacion(i, e);:} 
+| CONSOLE DOSPUNTOSSEGUIDOS PRINT IGUAL expresion END
+| error END
+;

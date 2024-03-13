@@ -7,18 +7,18 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>JFlex</groupId>
-            <artifactId>JFlex</artifactId>
-            <version>1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>Cup</groupId>
-            <artifactId>Cup</artifactId>
+            <groupId>cup_runtime</groupId>
+            <artifactId>cup_runtime</artifactId>
             <version>11b</version>
         </dependency>
         <dependency>
-            <groupId>Cupruntime</groupId>
-            <artifactId>Cupruntime</artifactId>
+            <groupId>jflex</groupId>
+            <artifactId>jflex</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>just_cup</groupId>
+            <artifactId>just_cup</artifactId>
             <version>11b</version>
         </dependency>
     </dependencies>
